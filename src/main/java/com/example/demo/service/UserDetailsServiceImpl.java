@@ -23,9 +23,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return userRepository.loadUserByUsername(username);
 	}
 	
-	public boolean validateUsername(String username, String password) {
-		
-		return userRepository.validateUsername(username, password);
-	}
 
 }
