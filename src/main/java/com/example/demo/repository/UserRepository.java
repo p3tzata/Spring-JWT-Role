@@ -5,6 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -26,18 +27,22 @@ public class UserRepository {
 		rolesDb.put("ROLE_ADMIN", new RoleImpl(3L,"ROLE_ADMIN"));
 		
 		
-		Set<GrantedAuthority> Ivoroles = new HashSet<>();
-		Ivoroles.add(rolesDb.get("ROLE_USER"));
+		Set<GrantedAuthority> IvoRoles = new HashSet<>();
+		IvoRoles.add(rolesDb.get("ROLE_USER"));
 		
 		
 		
-		Set<GrantedAuthority> Goshoroles = new HashSet<>();
-		Goshoroles.add(rolesDb.get("ROLE_USER"));
-		Goshoroles.add(rolesDb.get("ROLE_MODERATOR"));
-		Goshoroles.add(rolesDb.get("ROLE_ADMIN"));
+		Set<GrantedAuthority> GoshoRoles = new HashSet<>();
+		GoshoRoles.add(rolesDb.get("ROLE_USER"));
+		GoshoRoles.add(rolesDb.get("ROLE_MODERATOR"));
+		GoshoRoles.add(rolesDb.get("ROLE_ADMIN"));
 		
-		usersDb.put("ivo", new UserImpl(1L,"ivo", "$2y$12$Fi6hgSmTNA9nD1ZlwEyV0.khzAAadsx6boDZ6lXXfQln2FT5TCV3q", true, true, true, true, Ivoroles)) ;
-		usersDb.put("gosho", new UserImpl(1L,"gosho", "$2y$12$Fi6hgSmTNA9nD1ZlwEyV0.khzAAadsx6boDZ6lXXfQln2FT5TCV3q", true, true, true, true, Goshoroles)) ;
+		Set<GrantedAuthority> vikiRoles = GoshoRoles;
+		
+		
+		usersDb.put("ivo", new UserImpl(1L,"ivo", "$2y$12$Fi6hgSmTNA9nD1ZlwEyV0.khzAAadsx6boDZ6lXXfQln2FT5TCV3q", true, true, true, true, IvoRoles)) ;
+		usersDb.put("gosho", new UserImpl(1L,"gosho", "$2y$12$Fi6hgSmTNA9nD1ZlwEyV0.khzAAadsx6boDZ6lXXfQln2FT5TCV3q", true, true, true, true, GoshoRoles)) ;
+		usersDb.put("viki", new UserImpl(3L,"viki", "123456", true, true, true, true, vikiRoles)) ;
 	}
 	
 	public UserDetails loadUserByUsername(String username) {
@@ -50,10 +55,10 @@ public class UserRepository {
 	}
 	
 	
-	public boolean validateUsername(String username, String password) {
+	public boolean customAuth(String username, String password) {
 		
 		if(usersDb.containsKey(username)) {
-			if( usersDb.get(username).getPassword()==password) {
+			if( usersDb.get(username).getPassword().equals(password)) {
 				return true;
 			}
 		}

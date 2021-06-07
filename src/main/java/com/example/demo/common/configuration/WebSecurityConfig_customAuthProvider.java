@@ -18,18 +18,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.example.demo.service.UserDetailsServiceImpl;
 
-@Profile("!enableCustomAuthenticationProvider")
+@Profile("enableCustomAuthenticationProvider")
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
+public class WebSecurityConfig_customAuthProvider extends WebSecurityConfigurerAdapter{
 
 	@Autowired
 	private JWTAuthenticationEntryPoint JWTAuthenticationEntryPoint;
 	
+	@Autowired
+	private CustomAuthenticationProvider customAuthenticationProvider;
 	
-@Autowired
-private UserDetailsServiceImpl userDetailsService;
+
 
 @Autowired
 private JWTRequestFilter jwtRequestFilter;
@@ -39,15 +40,10 @@ private JWTRequestFilter jwtRequestFilter;
 @Autowired
 public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
-	auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+	auth.authenticationProvider(customAuthenticationProvider);
 }
 
 
-
-@Bean
-public PasswordEncoder passwordEncoder() {
-	return new BCryptPasswordEncoder();
-}
 
 @Bean
 @Override

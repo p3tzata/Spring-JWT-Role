@@ -3,7 +3,7 @@ package com.example.demo.service;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,5 +23,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return userRepository.loadUserByUsername(username);
 	}
 	
+	
+
+	public boolean customAuth(String username, String password) {
+		
+		return userRepository.customAuth(username, password);
+	}
 
 }

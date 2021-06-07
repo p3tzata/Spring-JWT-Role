@@ -78,5 +78,14 @@ public final class RoleImpl implements GrantedAuthority {
 		}
 		
 
-}
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "RoleImpl [id=" + id + ", name=" + name + "]";
+	}
+	
+	
 }

@@ -6,6 +6,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.demo.common.util.JWTTokenUtil;
 import com.example.demo.dto.AuthRequestBody;
 import com.example.demo.dto.AuthResponseBody;
+import com.example.demo.service.UserDetailsServiceImpl;
 
 @RestController
 @CrossOrigin
@@ -28,7 +31,7 @@ public class JWTAuthenticationController {
 	private JWTTokenUtil jwtTokenUtil;
 	
 	@Autowired
-	private UserDetailsService userDetailsService;
+	private UserDetailsServiceImpl userDetailsService;
 	
 	
 	@PostMapping(value = "/authenticate")
@@ -37,6 +40,9 @@ public class JWTAuthenticationController {
 		/**/
 		authenticate(authRequestBody.getUsername(), authRequestBody.getPassword());
 
+		//Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
+		
 		final UserDetails userDetails = userDetailsService
 		.loadUserByUsername(authRequestBody.getUsername());
 
