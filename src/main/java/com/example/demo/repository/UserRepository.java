@@ -27,21 +27,21 @@ public class UserRepository {
 		rolesDb.put("ROLE_ADMIN", new RoleImpl(3L,"ROLE_ADMIN"));
 		
 		
-		Set<GrantedAuthority> IvoRoles = new HashSet<>();
-		IvoRoles.add(rolesDb.get("ROLE_USER"));
+		Set<GrantedAuthority> userRoles = new HashSet<>();
+		userRoles.add(rolesDb.get("ROLE_USER"));
 		
 		
 		
-		Set<GrantedAuthority> GoshoRoles = new HashSet<>();
-		GoshoRoles.add(rolesDb.get("ROLE_USER"));
-		GoshoRoles.add(rolesDb.get("ROLE_MODERATOR"));
-		GoshoRoles.add(rolesDb.get("ROLE_ADMIN"));
+		Set<GrantedAuthority> adminRoles = new HashSet<>();
+		adminRoles.add(rolesDb.get("ROLE_USER"));
+		adminRoles.add(rolesDb.get("ROLE_MODERATOR"));
+		adminRoles.add(rolesDb.get("ROLE_ADMIN"));
 		
-		Set<GrantedAuthority> vikiRoles = GoshoRoles;
+		Set<GrantedAuthority> vikiRoles = adminRoles;
 		
 		
-		usersDb.put("ivo", new UserImpl(1L,"ivo", "$2y$12$Fi6hgSmTNA9nD1ZlwEyV0.khzAAadsx6boDZ6lXXfQln2FT5TCV3q", true, true, true, true, IvoRoles)) ;
-		usersDb.put("gosho", new UserImpl(1L,"gosho", "$2y$12$Fi6hgSmTNA9nD1ZlwEyV0.khzAAadsx6boDZ6lXXfQln2FT5TCV3q", true, true, true, true, GoshoRoles)) ;
+		usersDb.put("user", new UserImpl(1L,"user", "$2y$12$Fi6hgSmTNA9nD1ZlwEyV0.khzAAadsx6boDZ6lXXfQln2FT5TCV3q", true, true, true, true, userRoles)) ;
+		usersDb.put("admin", new UserImpl(1L,"admin", "$2y$12$Fi6hgSmTNA9nD1ZlwEyV0.khzAAadsx6boDZ6lXXfQln2FT5TCV3q", true, true, true, true, adminRoles)) ;
 		usersDb.put("viki", new UserImpl(3L,"viki", "123456", true, true, true, true, vikiRoles)) ;
 	}
 	

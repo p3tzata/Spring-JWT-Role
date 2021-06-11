@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -35,12 +37,12 @@ public class JWTAuthenticationController {
 	
 	
 	@PostMapping(value = "/authenticate")
-	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequestBody authRequestBody) throws Exception {
+	public ResponseEntity<?> createAuthenticationToken(@RequestBody AuthRequestBody authRequestBody, HttpSession httpSession) throws Exception {
 
 		/**/
 		authenticate(authRequestBody.getUsername(), authRequestBody.getPassword());
 
-		//Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		
 		
 		
 		final UserDetails userDetails = userDetailsService
@@ -48,10 +50,13 @@ public class JWTAuthenticationController {
 
 		final String token = jwtTokenUtil.generateToken(userDetails);
 
+		httpSession.setAttribute("userDetails", userDetails); //Decided by myself
+		
+		
+		
 		return ResponseEntity.ok(new AuthResponseBody(token));
 		
 		
-		//return ResponseEntity.ok("teset");
 		
 	    }
 

@@ -1,0 +1,2 @@
+JWT:
+used for authorization;
